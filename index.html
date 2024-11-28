@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Voting Site</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- PRN Modal -->
+  <div id="prn-modal" class="modal">
+    <div class="modal-content">
+      <h2>Welcome to the College Voting System</h2>
+      <p>Please enter your PRN number to continue:</p>
+      <input type="text" id="prn-input" placeholder="Enter PRN number" maxlength="10">
+      <button class="submit-prn-btn" onclick="submitPRN()">Submit</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container hidden" id="main-content">
+    <header>
+        <div class="header-content">
+          <img src="logo.jpeg" alt="College Logo" class="college-logo">
+          <div>
+            <h1>College Voting System</h1>
+            <p>Vote for your favorite candidate below!</p>
+          </div>
+        </div>
+      </header>
+      
+
+    <main>
+      <!-- Candidate 1 -->
+      <div class="card" id="candidate1">
+        <img src="sambata.jpg" alt="Candidate 1">
+        <h2>Pratham Jogdand</h2>
+        <h2>(SAMBATA)</h2>
+        <button class="vote-btn" onclick="submitVote('Pratham Jogdand')">Vote</button>
+      </div>
+
+      <!-- Candidate 2 -->
+      <div class="card" id="candidate2">
+        <img src="mc.jpg" alt="Candidate 2">
+        <h2>Shubham Koli</h2>
+        <h2>(GAWTHI)</h2>
+        <button class="vote-btn" onclick="submitVote('Shubham Koli')">Vote</button>
+      </div>
+
+      <!-- Candidate 3 -->
+      <div class="card" id="candidate3">
+        <img src="roksun.jpg" alt="Candidate 3">
+        <h2>Shubham Jadhav</h2>
+        <h2>(rocKsun)</h2>
+        <button class="vote-btn" onclick="submitVote('Shubham Jadhav')">Vote</button>
+      </div>
+
+      <!-- Candidate 4 -->
+      <div class="card" id="candidate4">
+        <img src="NICKL.jpg" alt="Candidate 4">
+        <h2>Nikhil Lokhande</h2>
+        <h2>(NICK-L)</h2>
+        <button class="vote-btn" onclick="submitVote('Nikhil Lokhande')">Vote</button>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 College Voting System | Designed by YG</p>
+    </footer>
+  </div>
+
+  <!-- Feedback Message -->
+  <div id="feedback" class="hidden">
+    <p id="feedback-message"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
