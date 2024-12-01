@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0072ff;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .dashboard-container button {
+      background-color: #0072ff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px;
+      transition: 0.3s;
+    }
+
+    .dashboard-container button:hover {
+      background-color: #005bb5;
+    }
+
+    .section {
+      width: 100%;
+      max-width: 600px;
+      margin: 20px 0;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      color: #333;
+    }
+
+    .card {
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card button {
+      background-color: #ff6347;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .card button:hover {
+      background-color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Admin Dashboard</h1>
+  </header>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-container">
+    
+    <!-- Section to manage candidates -->
+    <div class="section">
+      <h2>Manage Candidates</h2>
+      <button onclick="addCandidate()">Add Candidate</button>
+      <button onclick="viewCandidates()">View Candidates</button>
+    </div>
+
+    <!-- Section to view results -->
+    <div class="section">
+      <h2>View Election Results</h2>
+      <button onclick="viewResults()">View Results</button>
+    </div>
+
+    <!-- Section to log out -->
+    <div class="section">
+      <button onclick="logout()">Log Out</button>
+    </div>
+
+    <!-- Candidates List -->
+    <div id="candidates-list" class="section" style="display: none;">
+      <h2>List of Candidates</h2>
+      <div id="candidates-container"></div>
+    </div>
+
+    <!-- Election Results -->
+    <div id="results-section" class="section" style="display: none;">
+      <h2>Election Results</h2>
+      <div id="results-container"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Check if the admin is logged in
+    if (!localStorage.getItem("adminLoggedIn")) {
+      alert("You must log in as an admin to access this page.");
+      window.location.href = "index.html"; // Redirect to login page
+    }
+
+    // Log out functionality
+    function logout() {
+      localStorage.removeItem("adminLoggedIn");
+      window.location.href = "index.html"; // Redirect to login page
+    }
+
+    // Add a candidate
+    function addCandidate() {
+      const name = prompt("Enter Candidate Name:");
+      const image = prompt("Enter Candidate Image URL:");
+
+      if (name && image) {
+        const candidates = JSON.parse(localStorage.getItem("candidates")) || [];
+        candidates.push({ name, image, votes: 0 });
+        localStorage.setItem("candidates", JSON.stringify(candidates));
+        alert("Candidate added successfully!");
+      }
+    }
+
+    // View candidates list
+    function viewCandidates() {
+      const candidates = JSON.parse(localStorage.getItem("candidates")) || [];
+      const container = document.getElementById("candidates-container");
+      container.innerHTML = "";
+      candidates.forEach((candidate, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <span>${candidate.name}</span>
+          <button onclick="deleteCandidate(${index})">Delete</button>
+        `;
+        container.appendChild(card);
+      });
+      document.getElementById("candidates-list").style.display = "block";
+    }
+
+    // Delete candidate
+    function deleteCandidate(index) {
+      const candidates = JSON.parse(localStorage.getItem("candidates")) || [];
+      candidates.splice(index, 1);
+      localStorage.setItem("candidates", JSON.stringify(candidates));
+      alert("Candidate deleted successfully!");
+      viewCandidates(); // Refresh the list
+    }
+
+    // View election results
+    function viewResults() {
+      const candidates = JSON.parse(localStorage.getItem("candidates")) || [];
+      const container = document.getElementById("results-container");
+      container.innerHTML = "";
+      candidates.forEach(candidate => {
+        const resultCard = document.createElement("div");
+        resultCard.className = "card";
+        resultCard.innerHTML = `
+          <span>${candidate.name}: ${candidate.votes} votes</span>
+        `;
+        container.appendChild(resultCard);
+      });
+      document.getElementById("results-section").style.display = "block";
+    }
+  </script>
+</body>
+</html>
+
