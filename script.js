@@ -41,4 +41,27 @@ function submitVote(candidate) {
     }, 3000);
 }
 
+  // Admin login credentials (hardcoded for this example)
+const adminCredentials = {
+    username: 'admin',  // Admin Username
+    password: 'password123'  // Admin Password
+  };
+  
+  // Handle Admin Login
+  document.getElementById("admin-login-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const username = document.getElementById("admin-username").value.trim();
+    const password = document.getElementById("admin-password").value.trim();
+  
+    // Check if credentials match
+    if (username === adminCredentials.username && password === adminCredentials.password) {
+      // Store login state in localStorage
+      localStorage.setItem("adminLoggedIn", "true");
+      // Redirect to admin dashboard
+      window.location.href = "dashboard.html";
+    } else {
+      // Show error message if login fails
+      document.getElementById("error-message").style.display = "block";
+    }
+  });
   
